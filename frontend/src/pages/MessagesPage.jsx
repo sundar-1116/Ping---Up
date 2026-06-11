@@ -1,19 +1,45 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { FaPaperPlane, FaSearch, FaEllipsisV } from 'react-icons/fa';
 import { useApp } from '../context/AppContext';
 
 export default function MessagesPage() {
+  const location = useLocation();
   const {
-    messages, sendMessage, currentUser,
+    messages, sendMessage, currentUser, users,
     markMessagesAsRead, clearChatHistory, deleteConversation, showToast
   } = useApp();
-  const [activeId, setActiveId] = useState(messages[0]?.id || null);
+
+  const targetUserId = location.state?.userId;
+  const initialActiveId = targetUserId ? `conv_${targetUserId}` : (messages[0]?.id || null);
+
+  const [activeId, setActiveId] = useState(initialActiveId);
+  const [draftConv, setDraftConv] = useState(null);
+
+  useEffect(() => {
+    if (targetUserId && !messages.find(m => m.id === `conv_${targetUserId}`)) {
+      const targetUser = users.find(u => u.id === targetUserId);
+      if (targetUser) {
+        setDraftConv({
+          id: `conv_${targetUserId}`,
+          user: targetUser,
+          lastMessage: 'Start a conversation',
+          time: 'Just now',
+          unread: 0,
+          chat: []
+        });
+      }
+    } else {
+      setDraftConv(null);
+    }
+  }, [targetUserId, messages, users]);
+
   const [text, setText] = useState('');
   const [search, setSearch] = useState('');
   const [showMenu, setShowMenu] = useState(false);
   const messagesEndRef = useRef(null);
 
-  const activeConv = messages.find(m => m.id === activeId);
+  const activeConv = messages.find(m => m.id === activeId) || (draftConv?.id === activeId ? draftConv : null);
 
   // Automatically mark messages as read when active conversation changes
   useEffect(() => {
@@ -51,7 +77,8 @@ export default function MessagesPage() {
     }
   };
 
-  const filteredMessages = messages.filter(m =>
+  const allMessages = draftConv && !messages.find(m => m.id === draftConv.id) ? [draftConv, ...messages] : messages;
+  const filteredMessages = allMessages.filter(m =>
     m.user.name.toLowerCase().includes(search.toLowerCase())
   );
 

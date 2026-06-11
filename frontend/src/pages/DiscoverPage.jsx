@@ -18,14 +18,16 @@ const TRENDING_TAGS = [
 
 export default function DiscoverPage() {
   const navigate = useNavigate();
-  const { users, posts, toggleFollow, isFollowing } = useApp();
+  const { users, posts, toggleFollow, isFollowing, currentUser } = useApp();
   const [search, setSearch] = useState('');
   const [activeTab, setActiveTab] = useState('people');
 
   const filteredUsers = users.filter(u =>
-    u.name.toLowerCase().includes(search.toLowerCase()) ||
-    u.username.toLowerCase().includes(search.toLowerCase()) ||
-    u.bio?.toLowerCase().includes(search.toLowerCase())
+    u.id !== currentUser?.id && (
+      u.name.toLowerCase().includes(search.toLowerCase()) ||
+      u.username.toLowerCase().includes(search.toLowerCase()) ||
+      u.bio?.toLowerCase().includes(search.toLowerCase())
+    )
   );
 
   const filteredPosts = posts.filter(p =>

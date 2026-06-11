@@ -3,7 +3,7 @@
 // ============================================================
 
 export const CURRENT_USER = {
-  id: 'user_current',
+  id: 'user_sundar',
   name: 'Sundar',
   username: 'sundar',
   avatar: 'https://api.dicebear.com/9.x/avataaars/svg?seed=Sundar&backgroundColor=b6e3f4&clothingColor=3c4f5c',
@@ -19,6 +19,7 @@ export const CURRENT_USER = {
 };
 
 export const USERS = [
+  CURRENT_USER,
   {
     id: 'user_1',
     name: 'Alison Mars',

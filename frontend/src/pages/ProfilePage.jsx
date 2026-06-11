@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { FaMapMarkerAlt, FaCalendarAlt, FaGlobe, FaEllipsisH } from 'react-icons/fa';
 import { PostCard } from '../components/SharedComponents';
 import { VerifiedBadge } from '../components/SharedComponents';
 import { useApp } from '../context/AppContext';
-import { USERS } from '../data/mockData';
 
 export default function ProfilePage() {
   const { username } = useParams();
@@ -13,11 +12,35 @@ export default function ProfilePage() {
   const [activeTab, setActiveTab] = useState('posts');
   const [lightboxPost, setLightboxPost] = useState(null);
 
-  // Find user - either current or from list
-  const isOwnProfile = username === currentUser.username;
-  const profileUser = isOwnProfile
-    ? currentUser
-    : USERS.find(u => u.username === username) || USERS[0];
+  const [profileUser, setProfileUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  const isOwnProfile = username === currentUser?.username;
+
+  useEffect(() => {
+    if (isOwnProfile && currentUser) {
+      setProfileUser(currentUser);
+      setLoading(false);
+      return;
+    }
+
+    const fetchProfileUser = async () => {
+      setLoading(true);
+      try {
+        const res = await fetch(`/api/users/${username}`);
+        if (res.ok) {
+          setProfileUser(await res.json());
+        } else {
+          showToast('User not found', 'error');
+        }
+      } catch (err) {
+        console.error('Failed to fetch profile:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchProfileUser();
+  }, [username, currentUser, isOwnProfile, showToast]);
 
   const userPosts = posts.filter(p => p.author.username === username);
   const mediaPosts = userPosts.filter(p => p.image);
@@ -33,6 +56,22 @@ export default function ProfilePage() {
       default: return userPosts;
     }
   };
+
+  if (loading) {
+    return (
+      <div className="main-content" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '80vh', color: 'var(--text-muted)' }}>
+        Loading profile...
+      </div>
+    );
+  }
+
+  if (!profileUser) {
+    return (
+      <div className="main-content" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '80vh', color: 'var(--text-muted)' }}>
+        Profile not found
+      </div>
+    );
+  }
 
   const following = !isOwnProfile && isFollowing(profileUser.id);
 
@@ -65,7 +104,7 @@ export default function ProfilePage() {
                 </button>
                 <button
                   className="btn-outline"
-                  onClick={() => navigate('/messages')}
+                  onClick={() => navigate('/messages', { state: { userId: profileUser.id } })}
                 >
                   Message
                 </button>

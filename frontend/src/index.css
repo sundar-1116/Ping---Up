@@ -171,6 +171,67 @@ img { display: block; max-width: 100%; }
 
 .auth-field { margin-bottom: 16px; }
 .auth-label { display: block; font-size: 13px; font-weight: 500; margin-bottom: 7px; }
+
+/* Avatar Picker inside Auth */
+.auth-avatar-picker {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 4px;
+  background: var(--bg-secondary);
+  padding: 8px 12px;
+  border-radius: var(--r);
+  border: 1.5px solid var(--border);
+}
+.auth-avatar-options {
+  display: flex;
+  gap: 8px;
+  flex: 1;
+}
+.auth-avatar-wrapper {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: all var(--t);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+}
+.auth-avatar-wrapper:hover {
+  transform: scale(1.08);
+}
+.auth-avatar-wrapper.active {
+  border-color: var(--primary);
+  transform: scale(1.08);
+  box-shadow: 0 0 0 2.5px rgba(124,58,237,0.25);
+}
+.auth-avatar-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.auth-avatar-random-btn {
+  padding: 6px 12px;
+  background: white;
+  border: 1.5px solid var(--border);
+  border-radius: var(--r-sm);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  transition: all var(--t);
+  cursor: pointer;
+}
+.auth-avatar-random-btn:hover {
+  background: var(--primary-bg);
+  border-color: var(--primary);
+  color: var(--primary);
+  transform: translateY(-1px);
+}
+
 .auth-input-wrap { position: relative; }
 
 .auth-input {

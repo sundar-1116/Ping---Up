@@ -2,13 +2,13 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { VerifiedBadge } from '../components/SharedComponents';
 import { useApp } from '../context/AppContext';
-import { USERS } from '../data/mockData';
+
 
 export default function FollowingPage() {
   const navigate = useNavigate();
-  const { following, toggleFollow, isFollowing } = useApp();
+  const { following, toggleFollow, isFollowing, users } = useApp();
 
-  const followingUsers = USERS.filter(u => following.includes(u.id));
+  const followingUsers = users.filter(u => following.includes(u.id));
 
   return (
     <div className="main-content">

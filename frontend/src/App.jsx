@@ -39,7 +39,15 @@ function AppShell({ children }) {
 
 // ─── Root Router ──────────────────────────────────────────
 function AppRoutes() {
-  const { isLoggedIn, toast } = useApp();
+  const { isLoggedIn, toast, authLoading } = useApp();
+
+  if (authLoading) {
+    return (
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh', background: 'var(--bg-secondary)', color: 'var(--primary)', fontWeight: '600', fontSize: '18px' }}>
+        pingup...
+      </div>
+    );
+  }
 
   return (
     <>

@@ -12,11 +12,13 @@ const AVATAR_URLS = [
 
 export default function LoginPage() {
   const navigate = useNavigate();
-  const { login } = useApp();
+  const { login, signup } = useApp();
   const [isSignup, setIsSignup] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
+  const [username, setUsername] = useState('');
+  const [avatar, setAvatar] = useState(AVATAR_URLS[0]);
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
@@ -26,8 +28,12 @@ export default function LoginPage() {
     if (!email) errs.email = 'Email is required';
     else if (!/\S+@\S+\.\S+/.test(email)) errs.email = 'Invalid email address';
     if (!password) errs.password = 'Password is required';
-    else if (password.length < 6) errs.password = 'Min 6 characters';
-    if (isSignup && !name.trim()) errs.name = 'Name is required';
+    else if (password.length < 8) errs.password = 'Min 8 characters';
+    if (isSignup) {
+      if (!name.trim()) errs.name = 'Name is required';
+      if (!username.trim()) errs.username = 'Username is required';
+      else if (username.length < 3) errs.username = 'Min 3 characters';
+    }
     return errs;
   };
 
@@ -36,16 +42,39 @@ export default function LoginPage() {
     const errs = validate();
     if (Object.keys(errs).length) { setErrors(errs); return; }
     setLoading(true);
+    setErrors({});
     await new Promise(r => setTimeout(r, 800));
-    login(email, password);
-    navigate('/feed');
+    try {
+      if (isSignup) {
+        await signup(name, username, email, password, avatar);
+      } else {
+        await login(email, password);
+      }
+      navigate('/feed');
+    } catch (err) {
+      setErrors({ submit: err.message });
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleGoogle = async () => {
     setLoading(true);
+    setErrors({});
     await new Promise(r => setTimeout(r, 600));
-    login('google@user.com', 'google');
-    navigate('/feed');
+    try {
+      await login('google@user.com', 'google');
+      navigate('/feed');
+    } catch (err) {
+      try {
+        await signup('Google User', 'google_user', 'google@user.com', 'google', AVATAR_URLS[0]);
+        navigate('/feed');
+      } catch (signupErr) {
+        setErrors({ submit: signupErr.message });
+      }
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -108,19 +137,62 @@ export default function LoginPage() {
             <div className="auth-divider-line" />
           </div>
 
+          {errors.submit && <div className="auth-error" style={{ textAlign: 'center', marginBottom: 15, fontSize: 13, padding: 8, background: '#fef2f2', border: '1px solid var(--red)', borderRadius: 'var(--r-sm)' }}>{errors.submit}</div>}
+
           <form onSubmit={handleSubmit} noValidate>
             {isSignup && (
-              <div className="auth-field">
-                <label className="auth-label">Full name</label>
-                <input
-                  className={`auth-input ${errors.name ? 'error' : ''}`}
-                  type="text"
-                  placeholder="Enter your full name"
-                  value={name}
-                  onChange={e => { setName(e.target.value); setErrors(p => ({...p, name: ''})); }}
-                />
-                {errors.name && <span className="auth-error">{errors.name}</span>}
-              </div>
+              <>
+                <div className="auth-field">
+                  <label className="auth-label">Full name</label>
+                  <input
+                    className={`auth-input ${errors.name ? 'error' : ''}`}
+                    type="text"
+                    placeholder="Enter your full name"
+                    value={name}
+                    onChange={e => { setName(e.target.value); setErrors(p => ({...p, name: ''})); }}
+                  />
+                  {errors.name && <span className="auth-error">{errors.name}</span>}
+                </div>
+
+                <div className="auth-field">
+                  <label className="auth-label">Username</label>
+                  <input
+                    className={`auth-input ${errors.username ? 'error' : ''}`}
+                    type="text"
+                    placeholder="Create a handle (e.g. jane_doe)"
+                    value={username}
+                    onChange={e => { setUsername(e.target.value.toLowerCase().replace(/[^a-z0-9_]/g, '')); setErrors(p => ({...p, username: ''})); }}
+                  />
+                  {errors.username && <span className="auth-error">{errors.username}</span>}
+                </div>
+
+                <div className="auth-field">
+                  <label className="auth-label">Choose Avatar</label>
+                  <div className="auth-avatar-picker">
+                    <div className="auth-avatar-options">
+                      {AVATAR_URLS.map((url, i) => (
+                        <div
+                          key={i}
+                          className={`auth-avatar-wrapper ${avatar === url ? 'active' : ''}`}
+                          onClick={() => setAvatar(url)}
+                        >
+                          <img src={url} alt={`avatar-${i}`} />
+                        </div>
+                      ))}
+                    </div>
+                    <button
+                      type="button"
+                      className="auth-avatar-random-btn"
+                      onClick={() => {
+                        const seed = Math.random().toString(36).substring(7);
+                        setAvatar(`https://api.dicebear.com/9.x/avataaars/svg?seed=${seed}&backgroundColor=b6e3f4`);
+                      }}
+                    >
+                      ✨ Random
+                    </button>
+                  </div>
+                </div>
+              </>
             )}
 
             <div className="auth-field">

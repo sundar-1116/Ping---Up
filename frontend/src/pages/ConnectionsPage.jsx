@@ -11,6 +11,7 @@ export default function ConnectionsPage() {
   const [activeTab, setActiveTab] = useState('all');
 
   const filtered = users.filter(u => {
+    if (u.id === currentUser?.id) return false;
     const matchesSearch = u.name.toLowerCase().includes(search.toLowerCase()) ||
       u.username.toLowerCase().includes(search.toLowerCase());
     if (activeTab === 'following') return matchesSearch && isFollowing(u.id);
