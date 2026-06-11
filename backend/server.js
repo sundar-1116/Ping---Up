@@ -10,6 +10,7 @@ const DB_FILE = path.join(__dirname, 'db.json');
 
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
+app.use(cors());
 
 // Password Hashing helpers
 function hashPassword(password) {

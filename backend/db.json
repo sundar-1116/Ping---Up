@@ -242,7 +242,8 @@
       "image": "https://picsum.photos/id/29/700/500",
       "timestamp": "5 hours ago",
       "likes": [
-        "user_1"
+        "user_1",
+        "user_1781177628362"
       ],
       "savedBy": [
         "user_sundar"
@@ -261,6 +262,18 @@
           "userId": "user_sundar",
           "text": "Goals! 😍",
           "time": "3 hrs ago"
+        },
+        {
+          "id": "c_1781181897521",
+          "userId": "user_1781177628362",
+          "text": "hiii",
+          "time": "Just now"
+        },
+        {
+          "id": "c_1781181900405",
+          "userId": "user_1781177628362",
+          "text": "super right",
+          "time": "Just now"
         }
       ]
     }
@@ -474,6 +487,35 @@
       "receiverId": "user_1781177628362",
       "time": "Just now",
       "read": true
+    },
+    {
+      "id": "n_like_1781181893735",
+      "type": "like",
+      "senderId": "user_1781177628362",
+      "receiverId": "user_3",
+      "postId": "post_4",
+      "time": "Just now",
+      "read": false
+    },
+    {
+      "id": "n_comment_1781181897521",
+      "type": "comment",
+      "senderId": "user_1781177628362",
+      "receiverId": "user_3",
+      "postId": "post_4",
+      "text": "hiii",
+      "time": "Just now",
+      "read": false
+    },
+    {
+      "id": "n_comment_1781181900405",
+      "type": "comment",
+      "senderId": "user_1781177628362",
+      "receiverId": "user_3",
+      "postId": "post_4",
+      "text": "super right",
+      "time": "Just now",
+      "read": false
     }
   ],
   "followRequests": [
