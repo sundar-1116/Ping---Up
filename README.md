@@ -1,7 +1,6 @@
 # 📱 PingUp - Truly Connect
 
 🚀 **Live Frontend Demo (Vercel):** [https://ping-up-nva1.vercel.app/](https://ping-up-nva1.vercel.app/)
-⚙️ **Live Backend API (Render):** [https://ping-up-9buz.onrender.com](https://ping-up-9buz.onrender.com)
 
 [![React](https://img.shields.io/badge/React-19.x-61DAFB?logo=react&logoColor=black)](https://reactjs.org/)
 [![Vite](https://img.shields.io/badge/Vite-8.x-646CFF?logo=vite&logoColor=white)](https://vitejs.dev/)
