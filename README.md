@@ -1,134 +1,115 @@
 # 📱 PingUp - Truly Connect
 
-🚀 **Live Demo:** [https://ping-up-brown-one.vercel.app/](https://ping-up-brown-one.vercel.app/)
+🚀 **Live Frontend Demo (Vercel):** [https://ping-up-nva1.vercel.app/](https://ping-up-nva1.vercel.app/)
+⚙️ **Live Backend API (Render):** [https://ping-up-9buz.onrender.com](https://ping-up-9buz.onrender.com)
 
-[![React](https://img.shields.io/badge/React-18.x-61DAFB?logo=react&logoColor=black)](https://reactjs.org/)
-[![Vite](https://img.shields.io/badge/Vite-5.x-646CFF?logo=vite&logoColor=white)](https://vitejs.dev/)
-[![Vercel Deployment](https://img.shields.io/badge/Vercel-Deployed-brightgreen?logo=vercel&logoColor=white)](https://ping-up-brown-one.vercel.app/)
+[![React](https://img.shields.io/badge/React-19.x-61DAFB?logo=react&logoColor=black)](https://reactjs.org/)
+[![Vite](https://img.shields.io/badge/Vite-8.x-646CFF?logo=vite&logoColor=white)](https://vitejs.dev/)
+[![Vercel Deployment](https://img.shields.io/badge/Vercel-Deployed-brightgreen?logo=vercel&logoColor=white)](https://ping-up-nva1.vercel.app/)
+[![Render Deployment](https://img.shields.io/badge/Render-Deployed-purple?logo=render&logoColor=white)](https://ping-up-9buz.onrender.com)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-**PingUp** is a premium, high-fidelity social network mockup inspired by modern platforms like Instagram and Twitter. Designed from the ground up to feel smooth, visual-heavy, and alive, PingUp offers a responsive layout that looks stunning on laptops, desktops, and mobile devices alike.
+**PingUp** is a premium, full-stack social network web application inspired by modern platforms like Instagram and Twitter. Built with a dedicated React/Vite frontend and a Node.js/Express backend, it features dynamic user account creation, real-time messaging flows, story creation, notifications, follow request approvals, and profile management with persistent storage.
+
+---
+
+## 🏗️ Architecture & Project Structure
+
+The project is structured as a monorepo containing:
+* `/frontend`: The React.js client interface created with Vite.
+* `/backend`: Node.js & Express server handling API requests, user session tracking, password hashing, and storage.
 
 ---
 
 ## ✨ Features
 
-### 1. 📳 Interactive Feed & Post Management
-- **Media Lightbox**: Click on any post image to view it in full screen.
-- **Rich Engagements**: Like, bookmark/save, comment, and repost with instant UI counters.
-- **Delete Option**: Delete your own posts directly via the post dropdown menu, instantly recalculating counts.
+### 1. 🔑 Dynamic User Account Management & Auth
+- **User-Specific Profiles**: No shared static accounts! Users can sign up with their own display name, username, email, and password.
+- **Security**: Secure password hashing using PBKDF2 cryptography with unique salts for every user.
+- **Cookie Session Store**: HTTP-only cookied sessions preserve login state securely across requests.
+- **Starting Fresh**: New accounts initialize with `0 followers`, `0 following`, and `0 posts`.
 
-### 2. 📸 Instagram-Style Stories
+### 2. 📳 Interactive Feed & Post Management
+- **Media Uploads**: Publish text posts with image links.
+- **Rich Engagements**: Like, bookmark/save, comment, and delete posts with instant UI counters synced with the backend.
+- **Media Lightbox**: Click on any post image to view it in full screen.
+
+### 3. 📸 Instagram-Style Stories
 - **Creation Flow**: Create and upload photo/video stories.
 - **Timer Engine**: Viewing photo stories is controlled by a precise 10-second timer, while video stories play in full before automatically advancing.
-- **Skip-on-Tap Gesture**: Click anywhere on the story viewer screen to instantly skip/advance to the next story.
-- **Story Deletion**: Directly delete your own stories using the red trash button in the header.
+- **Skip-on-Tap Gesture**: Tap anywhere on the story viewer screen to instantly skip/advance to the next story.
 
-### 3. 💬 Real-Time Message Center
-- **Dynamic Conversations**: Engage in chat threads with visual status checks (Online/Offline).
-- **Unread Clearing**: Opening a conversation automatically clears unread counts across all badges (in sidebar, contacts list, etc.).
-- **Header Actions Dropdown**: Three-dots options menu in every chat to:
-  - 🧹 Clear chat history.
-  - 🗑️ Delete the entire conversation.
-  - 🔔 Mute notifications.
+### 4. 💬 Live Message Center
+- **Direct Messaging Flow**: Message another user directly by clicking "Message" on their profile card.
+- **Dynamic Conversations**: Instant message sending and inbox re-fetching.
+- **Status Checks**: Visual indicator of online users and unread counts.
+- **Inbox Cleanup**: Dedicated controls to clear chat history or delete conversations entirely.
 
-### 4. ⚙️ Account & Profile Settings Drawer
-- **Responsive Drawer Panel**: Slides out from the right on any page (replaces empty spaces on wide viewports).
-- **Profile Edit**: Modify display name, bio, website, location, and update avatar (Dicebear seed generation or file base64 uploads).
-- **Security & Account**: Change username and password with validation.
-- **Global Invalidation**: Changes to credentials immediately propagate to updating posts and stories.
-
-### 5. 👥 Connections & Social Discovery
+### 5. 👥 Follow & Connection Engine
+- **Follow Requests**: New accounts receive a seeded request that can be accepted or deleted.
+- **Follow Requests Panel**: Decline/delete or approve incoming follows with real-time followers/following counter updates.
 - **Discovery Grid**: Search and explore other profiles on a dedicated discover page.
-- **Connections & Requests**: Approve or decline incoming requests, view following lists, and toggle follows dynamically.
 
 ---
 
 ## 🛠️ Tech Stack
 
-- **Core**: React, Javascript, HTML5.
-- **Styling**: Vanilla CSS (Tailwind avoided for customized glassmorphic design and control over animations).
-- **Icons**: `react-icons` (FontAwesome).
-- **Build Tool**: Vite (Fast HMR & clean bundler output).
+- **Frontend**: React (v19), React Router (v7), Vanilla CSS (responsive glassmorphism layout, customized animations).
+- **Backend**: Node.js, Express, Custom Cookie Session Middleware, PBKDF2 Password Cryptography.
+- **Database**: Local JSON-file database (`db.json`) on backend.
+- **Deployment**: Vercel (Frontend), Render (Backend).
 
 ---
 
-## 🚀 Getting Started
+## 🚀 Local Development Setup
 
 ### Prerequisites
-Make sure you have [Node.js](https://nodejs.org/) installed on your machine.
+Make sure you have [Node.js](https://nodejs.org/) installed.
 
-### Installation
-1. Clone the project.
-2. Open terminal in the directory and install dependencies:
+### 1. Backend Setup
+1. Navigate to the backend directory:
+   ```bash
+   cd backend
+   ```
+2. Install dependencies:
    ```bash
    npm install
    ```
+3. Start the backend server:
+   ```bash
+   npm start
+   ```
+   The backend will run on [http://localhost:5000](http://localhost:5000).
 
-### Development Server
-Run the local dev server:
+### 2. Frontend Setup
+1. Open a new terminal window and navigate to the frontend directory:
+   ```bash
+   cd frontend
+   ```
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Run the development server:
    ```bash
    npm run dev
    ```
-Open [http://localhost:5173](http://localhost:5173) in your browser.
-
-### Production Build
-Build the bundle for deployment:
-   ```bash
-   npm run build
-   ```
+   Open the development URL (e.g. [http://localhost:5173](http://localhost:5173)) in your browser.
 
 ---
 
-## 📤 Uploading to GitHub
+## ☁️ Deployment
 
-To publish this project to your GitHub repository, run the following commands in your project root directory:
+### 1. Backend (Render)
+Hosted as a Node.js web service on [Render](https://render.com/) pointing to the `/backend` subdirectory:
+- **Build Command**: `npm install`
+- **Start Command**: `node server.js`
+- **Port**: `5000` (Listen address bound to `0.0.0.0`)
 
-1. **Initialize Git Repository**:
-   ```bash
-   git init
-   ```
+### 2. Frontend (Vercel)
+Hosted on [Vercel](https://vercel.com/) pointing to the `/frontend` subdirectory:
+- **Build Command**: `npm run build`
+- **Output Directory**: `dist`
+- **API Rewrite Proxy**: `vercel.json` is configured to route `/api/:path*` traffic directly to the Render endpoint, avoiding CORS issues and enabling secure cookie sharing.
 
-2. **Add all files to staging**:
-   ```bash
-   git add .
-   ```
-
-3. **Create the initial commit**:
-   ```bash
-   git commit -m "feat: complete PingUp application with delete options, settings drawer, and space optimization"
-   ```
-
-4. **Rename branch to main**:
-   ```bash
-   git branch -M main
-   ```
-
-5. **Link to your GitHub Remote Repository**:
-   *(Replace `<username>` and `<repo-name>` with your actual GitHub info)*
-   ```bash
-   git remote add origin https://github.com/<username>/<repo-name>.git
-   ```
-
-6. **Push to GitHub**:
-   ```bash
-   git push -u origin main
-   ```
-
----
-
-## 🚀 Deployment
-
-We recommend deploying this project on **Vercel** because it offers instant builds, zero-config for React/Vite, automatic CDN routing, and seamless integration with GitHub.
-
-### Deploying to Vercel
-
-1. **Sign Up/Login**: Go to [Vercel](https://vercel.com/) and sign up using your GitHub account.
-2. **Import Project**: Click on **Add New** > **Project** on your Vercel Dashboard.
-3. **Connect Repository**: Select and import your `Ping---Up` repository from the list.
-4. **Configure Settings**:
-   - Vercel automatically detects the Vite setup and sets the build command to `npm run build` and the output directory to `dist`.
-   - Leave all standard settings as default.
-5. **Deploy**: Click **Deploy**. Vercel will build and serve your app in under a minute!
-6. **Automatic Updates**: Every time you commit and push to your GitHub `main` branch, Vercel will automatically trigger a new deployment.
 
