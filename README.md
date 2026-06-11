@@ -1,7 +1,10 @@
 # 📱 PingUp - Truly Connect
 
+🚀 **Live Demo:** [https://ping-up-brown-one.vercel.app/](https://ping-up-brown-one.vercel.app/)
+
 [![React](https://img.shields.io/badge/React-18.x-61DAFB?logo=react&logoColor=black)](https://reactjs.org/)
 [![Vite](https://img.shields.io/badge/Vite-5.x-646CFF?logo=vite&logoColor=white)](https://vitejs.dev/)
+[![Vercel Deployment](https://img.shields.io/badge/Vercel-Deployed-brightgreen?logo=vercel&logoColor=white)](https://ping-up-brown-one.vercel.app/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 **PingUp** is a premium, high-fidelity social network mockup inspired by modern platforms like Instagram and Twitter. Designed from the ground up to feel smooth, visual-heavy, and alive, PingUp offers a responsive layout that looks stunning on laptops, desktops, and mobile devices alike.
