@@ -111,3 +111,21 @@ To publish this project to your GitHub repository, run the following commands in
    ```bash
    git push -u origin main
    ```
+
+---
+
+## 🚀 Deployment
+
+We recommend deploying this project on **Vercel** because it offers instant builds, zero-config for React/Vite, automatic CDN routing, and seamless integration with GitHub.
+
+### Deploying to Vercel
+
+1. **Sign Up/Login**: Go to [Vercel](https://vercel.com/) and sign up using your GitHub account.
+2. **Import Project**: Click on **Add New** > **Project** on your Vercel Dashboard.
+3. **Connect Repository**: Select and import your `Ping---Up` repository from the list.
+4. **Configure Settings**:
+   - Vercel automatically detects the Vite setup and sets the build command to `npm run build` and the output directory to `dist`.
+   - Leave all standard settings as default.
+5. **Deploy**: Click **Deploy**. Vercel will build and serve your app in under a minute!
+6. **Automatic Updates**: Every time you commit and push to your GitHub `main` branch, Vercel will automatically trigger a new deployment.
+
